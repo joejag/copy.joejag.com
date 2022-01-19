@@ -1,0 +1,32 @@
+<textarea id="w3review" name="w3review" rows="4" cols="50"> </textarea>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+  ;(function ($) {
+    $(document).ready(function () {
+      $.get(
+        'https://te76s61rtb.execute-api.eu-west-2.amazonaws.com/prod/copy',
+        function (data, status) {
+          $('#w3review').val(data)
+        }
+      )
+
+      var timer
+      var delay = 600 // 0.6 seconds delay after last input
+
+      $('#w3review').bind('input', function () {
+        window.clearTimeout(timer)
+        timer = window.setTimeout(function () {
+          console.log('SUBMIT!')
+          $.ajax({
+            type: 'POST',
+            url: 'https://te76s61rtb.execute-api.eu-west-2.amazonaws.com/prod/copy',
+            contentType: 'text/plain',
+            data: $('#w3review').val(),
+          })
+        }, delay)
+      })
+    })
+  })(jQuery)
+</script>
